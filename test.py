@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import nmap
 import sqlite3
 import params
@@ -10,7 +12,7 @@ cur.execute('create table if not exists %s (mac text, timestamp datetime, is_ava
 
 while True:
     nm = nmap.PortScanner()
-    nm.scan(hosts='192.168.2.0/24', arguments='-n -sP -PE -PA21,23,80,3389')
+    nm.scan(hosts=params.subnetwork, arguments='-n -sP -PE -PA21,23,80,3389')
     hosts_list = [(nm[x]['vendor'].keys()[0], 1) for x in nm.all_hosts() if len(nm[x]['vendor']) > 0]
 
     # Select latest states of all known MACs.
