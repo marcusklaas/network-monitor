@@ -10,6 +10,9 @@ conn = sqlite3.connect(params.database_path)
 cur = conn.cursor()
 cur.execute('create table if not exists %s (mac text, timestamp datetime, is_available boolean)' % params.table_name)
 
+# Create index to speed up aggregation
+cur.execute('create index if not exists mac_time on %s (mac, timestamp)' % params.table_name)
+
 while True:
     nm = nmap.PortScanner()
     nm.scan(hosts=params.subnetwork, arguments='-n -sP -PE -PA21,23,80,3389')
