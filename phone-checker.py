@@ -19,7 +19,15 @@ if cur.next()[0] != 1:
 cur.execute('select 0 from %s\
              where mac = ?\
              and timestamp >= datetime(\'now\', \'-%s minutes\')\
-             and is_available = 1' % (params.table_name, params.phone_timeout_minutes),
+             and is_available = 1\
+             UNION\
+             SELECT 0 from (\
+                select is_available from %s\
+                where timestamp < datetime(\'now\', \'-%s minutes\')\
+                order by timestamp desc limit 1\
+             )\
+             where is_available = 1' % (params.table_name, params.phone_timeout_minutes,
+                                        params.table_name, params.phone_timeout_minutes),
             (params.phone_mac,))
 
 if sum(1 for _ in cur) == 0:
