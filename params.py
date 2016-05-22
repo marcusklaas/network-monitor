@@ -7,3 +7,4 @@ hue_username = '6e1d2fb1f8c4c4f1d48920313635d7'
 phone_timeout_minutes = 5
 blend_rate = 0.1
 wake_up_scene = 'XRelax'
+params.photo_capture_directory = '/home/marcusklaas/python/photo_capture'

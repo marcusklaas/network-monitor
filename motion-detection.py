@@ -1,4 +1,5 @@
-# import the necessary packages
+#!/usr/bin/python
+
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from datetime import datetime
@@ -75,7 +76,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 
         if not is_available:
             bridge.groups[0].action(scene=params.wake_up_scene)
-            cv2.imwrite("photo-capture/%s.jpg" % datetime.now(), image)
+            cv2.imwrite("%s/%s.jpg" % (params.photo_capture_directory, datetime.now()), image)
     
     # slowly blend in current image onto background
     # FIXME: do it more slowly when motion is detected?
